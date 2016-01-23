@@ -1,0 +1,115 @@
+/*stored procedures that were created*/
+
+/*to insert data*/
+CREATE PROCEDURE ak
+ (
+ IN p_name text,
+ IN p_address text,
+ IN p_phone int(10),
+ IN p_email text,
+ IN p_date date
+ )
+ BEGIN
+ INSERT INTO tuserdetails
+ (
+ Name,
+ Address,
+ Phone,
+ Email,
+ Date
+ )
+ VALUES
+ (
+ p_name,
+ p_address,
+ p_phone,
+ p_email,
+ p_date
+ );
+ END
+ $$
+
+call ak
+ ('sakshi',
+ 'vitu',
+ 8765422,
+ 'sakshi018@gmail.com',
+ '1996-01-26');
+ $$
+ 
+ --------------------------------------------------------------------------------------------------------------------------------------------------------
+ /*to retrieve data given id*/
+ CREATE PROCEDURE rett
+ (
+ IN  p_id tinyint(4),
+ OUT p_name text,
+ OUT p_address text,
+ OUT p_phone int(10),
+ OUT p_email text,
+ OUT p_date date
+ )
+ BEGIN
+ SELECT Name,
+ Address,
+ Phone
+ ,
+ Email,
+ Date
+ INTO
+ p_name,
+ p_address,
+ p_phone,
+ p_email,
+ p_date
+ FROM tuserdetails
+ WHERE ID=p_id;
+ END
+ $$
+OK, 0 rows affected (0.07 sec)
+
+
+ CALL rett
+ (2, @p_name,
+ @p_address,
+ @p_phone,
+ @p_email,
+ @p_date
+ )
+ $$
+OK, 0 rows affected (0.09 sec)
+
+ SELECT @p_name as p_name,
+ @p_address as p_address,
+ @p_phone as p_phone,
+ @p_email as p_email,
+ @p_date as p_date
+ $$
+ 
+ --------------------------------------------------------------------------------------------------------------------------------------------------------------
+ /*Module 1, question 3*/
+ 
+ /*Write a stored procedure to retrieve date from TUserDetails table which takes
+the parameter ID.*/
+
+ CREATE PROCEDURE ret_d
+ (
+ IN p_id tinyint(4),
+ OUT p_date date
+ )
+ BEGIN
+ SELECT Date
+ INTO p_date
+ FROM tuserdetails
+ WHERE p_id=ID;
+ END
+ $$
+OK, 0 rows affected (0.00 sec)
+
+CALL ret_d
+(1, @p_date)
+$$
+
+ SELECT @p_date AS p_date
+ $$
+
+
